@@ -37,6 +37,17 @@ function validZip(value) {
 
     return true
 }
+function validAge(value) {
+    const regEx = /\b\d{8}\b/g
+
+    if(!regEx.test(value))
+        return false
+
+    return true
+}
+
+
+
 function checkValidForm(elements) {
     let disable = false
     let errors = document.querySelectorAll('.is-invalid')
@@ -170,6 +181,13 @@ function setEventListeners() {
                         e.target.classList.add("is-valid");
                         checkValidForm(forms)
                     }
+                })
+                break;
+            case "inputDate":
+                element.addEventListener("keyup", function(e) { 
+                    
+                    yyyymmdd(e.target.value)
+                    console.log(e)
                 })
                 break;
         }     
