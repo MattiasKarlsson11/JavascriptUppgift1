@@ -1,13 +1,21 @@
-function validMinValue(value, minValue = 2) {
-    if(value.length < minValue)
-        return false 
+function validText(value) {
+    const regEx = /(.*[a-z]){3}/g
+
+    if(!regEx.test(value))
+        return false
 
     return true
 }
-function validEmail(value) {
-    // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-    const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+function passwordMatch(value) {
+
+    if (document.getElementById('inputPassword').value == document.getElementById('inputPasswordConfirm').value)
+        return false
     
+    return true
+}
+function validEmail(value) {
+    const regEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g
+
     if(!regEx.test(value))
         return false
 
@@ -16,6 +24,14 @@ function validEmail(value) {
 function validPassword(value) {
     const regEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
     
+    if(!regEx.test(value))
+        return false
+
+    return true
+}
+function validZip(value) {
+    const regEx = /\b\d{5}\b/g
+
     if(!regEx.test(value))
         return false
 
@@ -36,67 +52,122 @@ function checkValidForm(elements) {
 }
 function setEventListeners() {
     forms.forEach(element => {
-        switch(element.type) {
-            case "text":
+        switch(element.id) {
+            case "inputFirstName":
                 element.addEventListener("keyup", function(e) { 
                     
-                    if(!validMinValue(e.target.value)) {
+                    if(!validText(e.target.value)) {
                         e.target.classList.add("is-invalid");
-                        document.getElementById(`${e.target.id}-error`).style.display = "block"
                         checkValidForm(forms)
                     }                 
                     else {
                         e.target.classList.remove("is-invalid");
-                        document.getElementById(`${e.target.id}-error`).style.display = "none"
+                        e.target.classList.add("is-valid");
+                        checkValidForm(forms)
+                    }
+                })
+                break;
+            case "inputLastName":
+                element.addEventListener("keyup", function(e) { 
+                    
+                    if(!validText(e.target.value)) {
+                        e.target.classList.add("is-invalid");
+                        checkValidForm(forms)
+                    }                 
+                    else {
+                        e.target.classList.remove("is-invalid");
+                        e.target.classList.add("is-valid");
                         checkValidForm(forms)
                     }
                 })
                 break;
     
-            case "email":
+            case "inputEmail":
                 element.addEventListener("keyup", function(e) { 
                     
                     if(!validEmail(e.target.value)) {
                         e.target.classList.add("is-invalid");
-                        document.getElementById(`${e.target.id}-error`).style.display = "block"
                         checkValidForm(forms)
                     }                 
                     else {
                         e.target.classList.remove("is-invalid");
-                        document.getElementById(`${e.target.id}-error`).style.display = "none"
+                        e.target.classList.add("is-valid");
                         checkValidForm(forms)
                     }
                 })
                 break;
     
-            case "password":
+            case "inputPassword":
                 element.addEventListener("keyup", function(e) { 
                     
                     if(!validPassword(e.target.value)) {
                         e.target.classList.add("is-invalid");
-                        document.getElementById(`${e.target.id}-error`).style.display = "block"
                         checkValidForm(forms)
                     }                 
                     else {
                         e.target.classList.remove("is-invalid");
-                        document.getElementById(`${e.target.id}-error`).style.display = "none"
+                        e.target.classList.add("is-valid");
                         checkValidForm(forms)
                     }
                 })
                 break;
     
 
-            case "textarea":
+            case "inputPasswordConfirm":
                 element.addEventListener("keyup", function(e) { 
                     
-                    if(!validMinValue(e.target.value, 5)) {
+                    if(passwordMatch(e.target.value)) {
                         e.target.classList.add("is-invalid");
-                        document.getElementById(`${e.target.id}-error`).style.display = "block"
                         checkValidForm(forms)
                     }                 
                     else {
                         e.target.classList.remove("is-invalid");
-                        document.getElementById(`${e.target.id}-error`).style.display = "none"
+                        e.target.classList.add("is-valid");
+                        checkValidForm(forms)
+                    }
+                })
+                break;
+
+            case "inputAddress":
+                element.addEventListener("keyup", function(e) { 
+                    
+                    if(!validText(e.target.value)) {
+                        e.target.classList.add("is-invalid");
+                        checkValidForm(forms)
+                    }                 
+                    else {
+                        e.target.classList.remove("is-invalid");
+                        e.target.classList.add("is-valid");
+                        checkValidForm(forms)
+                    }
+                })
+                break;
+
+            case "inputCity":
+                element.addEventListener("keyup", function(e) { 
+                    
+                    if(!validText(e.target.value)) {
+                        e.target.classList.add("is-invalid");
+                        checkValidForm(forms)
+                    }                 
+                    else {
+                        e.target.classList.remove("is-invalid");
+                        e.target.classList.add("is-valid");
+                        checkValidForm(forms)
+                    }
+                })
+                break;
+
+            case "inputZip":
+                element.addEventListener("keyup", function(e) { 
+                    
+                    if(!validZip(e.target.value)) {
+                        e.target.classList.add("is-invalid");
+                        checkValidForm(forms)
+                    }                 
+                    else {
+                        e.target.classList.remove("is-invalid");
+                        e.target.classList.add("is-valid");
                         checkValidForm(forms)
                     }
                 })
@@ -105,7 +176,6 @@ function setEventListeners() {
     })
 }
 function onSubmit(e) {
-    // Kommer ersättas med C# framöver
     e.preventDefault()
     console.log("submitted")
 }
