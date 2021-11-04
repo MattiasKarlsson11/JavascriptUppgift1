@@ -37,16 +37,20 @@ function validZip(value) {
 
     return true
 }
-function validAge(value) {
-    const regEx = /\b\d{8}\b/g
 
-    if(!regEx.test(value))
-        return false
-
-    return true
-}
-
-
+var birthday = document.getElementById(inputDate)
+function underAgeValidate(birthday) {
+    var optimizedBirthday = birthday.replace(/-/g, "/");
+    var myBirthday = new Date(optimizedBirthday);
+    var currentDate = new Date().toJSON().slice(0, 10) + ' 01:00:00';
+    var myAge = ~~((Date.now(currentDate) - myBirthday) / (31557600000));
+ 
+    if (myAge < 18) {
+       return false;
+    } else {
+       return true;
+    }
+ }
 
 function checkValidForm(elements) {
     let disable = false
@@ -186,8 +190,15 @@ function setEventListeners() {
             case "inputDate":
                 element.addEventListener("keyup", function(e) { 
                     
-                    yyyymmdd(e.target.value)
-                    console.log(e)
+                    if(!underAgeValidate(e.target.value)) {
+                        e.target.classList.add("is-invalid");
+                        checkValidForm(forms)
+                    }                 
+                    else {
+                        e.target.classList.remove("is-invalid");
+                        e.target.classList.add("is-valid");
+                        checkValidForm(forms)
+                    }
                 })
                 break;
         }     
