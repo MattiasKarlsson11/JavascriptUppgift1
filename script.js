@@ -204,10 +204,6 @@ function setEventListeners() {
         }     
     })
 }
-function onSubmit(e) {
-    e.preventDefault()
-    console.log("submitted")
-}
 
 var forms = document.querySelectorAll('.needs-validation')
 setEventListeners()
